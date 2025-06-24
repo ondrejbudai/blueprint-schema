@@ -94,6 +94,7 @@ func exportJSON(this js.Value, p []js.Value) interface{} {
 func main() {
 	// Register the WASM functions
 	js.Global().Set("exportTOML", js.FuncOf(exportTOML))
+	js.Global().Set("exportJSON", js.FuncOf(exportJSON))
 
 	// Keep the program running
 	select {}
