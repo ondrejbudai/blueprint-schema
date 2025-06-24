@@ -111,158 +111,158 @@
         <div class="section">
             <h2>Input (YAML Blueprint)</h2>
             <textarea id="yamlInput" placeholder="Paste your YAML blueprint here..." disabled>name: example-blueprint
-                #
-                # A complete example of a blueprint with all possible fields.
-                #
-                ---
-                name: "Blueprint example"
-                description: "A complete example of a blueprint with all possible fields"
-                hostname: "worker.example.com"
-                fips:
-                  enabled: true
-                dnf:
-                  packages:
-                    - "vim-enhanced"
-                    - "vim-enhanced-9.1.866-1"
-                    - "vim-enhanced-9.1.866-1.fc41.x86_64"
-                    - "@virtualization"
-                  groups:
-                    - "virtualization"
-                  import_keys:
-                    - "/etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-18-primary"
-                  modules:
-                    - "postgres:16/server"
-                  repositories:
-                    - id: "fedora-cisco-openh264"
-                      name: "Fedora $releasever openh264 (From Cisco) - $basearch"
-                      gpg_keys: ["file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch"]
-                      gpg_check_repo: false
-                      # ssl_verify: true # can be omitted, defaults to true
-                      source:
-                        #urls: [""]
-                        #mirrorlist: ""
-                        metalink: "https://mirrors.fedoraproject.org/metalink?repo=fedora-cisco-openh264-$releasever&arch=$basearch"
-                      usage:
-                        configure: false
-                    - id: "empty-repo"
-                      usage:
-                        install: false
-                        configure: false
-                containers:
-                  - source: "quay.io/fedora/fedora:latest"
-                    name: "fedora"
-                    tls_verify: true
-                    local_storage: true
-                kernel:
-                  package: "kernel-debug-6.11.5-300"
-                  cmdline_append:
-                    - "nosmt=force"
-                network:
-                  firewall:
-                    services:
-                      - service: "ssh"
-                        # enabled: true # can be omitted
-                      - service: "dhcp"
-                      - port: 53
-                        protocol: "udp"
-                      - port: 1313
-                        # enabled: false # unsupported by TOML
-                      - from: 60000
-                        to: 60010
-                        protocol: "udp"
-                accounts:
-                  users:
-                    - name: "lzap"
-                      description: "Lukas Zapletal"
-                      password: ""
-                      force_password_change: false
-                      ssh_keys:
-                        - "ssh-key 1234"
-                      home: "/home/lzap"
-                      shell: "/usr/bin/bash"
-                      uid: 1001
-                      gid: 1001
-                      groups: ["wheel", "operators"]
-                      expires: "2050-05-13"
-                  groups:
-                    - name: "operators"
-                      gid: 1042
-                timedate:
-                  timezone: "Europe/Prague"
-                  ntp_servers: ["0.north-america.pool.ntp.org", "1.north-america.pool.ntp.org"]
-                locale:
-                  languages: ["en_US.UTF-8", "cs_CZ.UTF-8"]
-                  keyboards: ["cz"]
-                systemd:
-                  enabled: ["sshd.service", "backup.timer"]
-                  disabled: ["tuned", "cupsd"]
-                  masked: ["masked.service"]
-                fsnodes:
-                  - path: "/var/tmp/dir/file1"
-                    type: "file" # can be ommited
-                    mode: "0644" # can be ommited
-                    user: "lzap"
-                    group: "lzap"
-                  - path: "/var/tmp/dir/file2"
-                    type: "file"
-                    mode: "0644"
-                    contents:
-                      text: "test"
-                  - path: "/var/tmp/dir"
-                    type: "dir"
-                    mode: "0755"
-                    user: "lzap"
-                    group: "lzap"
-                    ensure_parents: true
-                  - path: "/var/tmp/dir"
-                    mode: "0755"
-                    type: "dir"
-                    #state: "absent" # unsupported by TOML
-                ignition:
-                  url: "https://ignition.example.com/firstboot"
-                  #text: ""
-                installer:
-                  anaconda:
-                    unattended: true
-                    sudo_nopasswd: ["lzap"]
-                    enabled_modules: ["org.fedoraproject.Anaconda.Modules.Subscription"]
-                    disabled_modules: ["org.fedoraproject.Anaconda.Modules.Timezone"]
-                    kickstart: "# some kickstart data"
-                  coreos:
-                    installation_device: "/dev/vda"
-                cacerts:
-                  - pem: "pem encoded cert"
-                openscap:
-                  profile_id: "xccdf_org.ssgproject.content_profile_cis"
-                  datastream: "/usr/share/xml/scap/ssg/content/ssg-rhel8-ds.xml"
-                  tailoring:
-                    selected: ["xccdf_org.ssgproject.content_rule_md5_check"]
-                    unselected: ["xccdf_org.ssgproject.content_rule_grub2_password"]
-                    #json_profile_id: "name-of-profile-used-in-json-tailoring-file"
-                    #json_filepath: "file:///some/path/tailoring-file.json"
-                storage:
-                  type: "gpt"
-                  minsize: "150 GiB"
-                  partitions:
-                    - type: "plain"
-                      label: "label"
-                      mountpoint: "/"
-                      fs_type: "ext4"
-                      minsize: "50 GiB"
-                    - type: "lvm"
-                      name: "vg_name"
-                      minsize: "50 GiB"
-                      logical_volumes:
-                        - label: "label"
-                          mountpoint: "/var"
-                          fs_type: "ext4"
-                          name: "lv_name"
-                          minsize: "50 GiB"
-                    - type: "btrfs"
-                      minsize: "50 GiB"
-                      subvolumes:
-                        - name: "name"
-                          mountpoint: "/opt/name"</textarea>
+#
+# A complete example of a blueprint with all possible fields.
+#
+---
+name: "Blueprint example"
+description: "A complete example of a blueprint with all possible fields"
+hostname: "worker.example.com"
+fips:
+  enabled: true
+dnf:
+  packages:
+    - "vim-enhanced"
+    - "vim-enhanced-9.1.866-1"
+    - "vim-enhanced-9.1.866-1.fc41.x86_64"
+    - "@virtualization"
+  groups:
+    - "virtualization"
+  import_keys:
+    - "/etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-18-primary"
+  modules:
+    - "postgres:16/server"
+  repositories:
+    - id: "fedora-cisco-openh264"
+      name: "Fedora $releasever openh264 (From Cisco) - $basearch"
+      gpg_keys: ["file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch"]
+      gpg_check_repo: false
+      # ssl_verify: true # can be omitted, defaults to true
+      source:
+        #urls: [""]
+        #mirrorlist: ""
+        metalink: "https://mirrors.fedoraproject.org/metalink?repo=fedora-cisco-openh264-$releasever&arch=$basearch"
+      usage:
+        configure: false
+    - id: "empty-repo"
+      usage:
+        install: false
+        configure: false
+containers:
+  - source: "quay.io/fedora/fedora:latest"
+    name: "fedora"
+    tls_verify: true
+    local_storage: true
+kernel:
+  package: "kernel-debug-6.11.5-300"
+  cmdline_append:
+    - "nosmt=force"
+network:
+  firewall:
+    services:
+      - service: "ssh"
+        # enabled: true # can be omitted
+      - service: "dhcp"
+      - port: 53
+        protocol: "udp"
+      - port: 1313
+        # enabled: false # unsupported by TOML
+      - from: 60000
+        to: 60010
+        protocol: "udp"
+accounts:
+  users:
+    - name: "lzap"
+      description: "Lukas Zapletal"
+      password: ""
+      force_password_change: false
+      ssh_keys:
+        - "ssh-key 1234"
+      home: "/home/lzap"
+      shell: "/usr/bin/bash"
+      uid: 1001
+      gid: 1001
+      groups: ["wheel", "operators"]
+      expires: "2050-05-13"
+  groups:
+    - name: "operators"
+      gid: 1042
+timedate:
+  timezone: "Europe/Prague"
+  ntp_servers: ["0.north-america.pool.ntp.org", "1.north-america.pool.ntp.org"]
+locale:
+  languages: ["en_US.UTF-8", "cs_CZ.UTF-8"]
+  keyboards: ["cz"]
+systemd:
+  enabled: ["sshd.service", "backup.timer"]
+  disabled: ["tuned", "cupsd"]
+  masked: ["masked.service"]
+fsnodes:
+  - path: "/var/tmp/dir/file1"
+    type: "file" # can be ommited
+    mode: "0644" # can be ommited
+    user: "lzap"
+    group: "lzap"
+  - path: "/var/tmp/dir/file2"
+    type: "file"
+    mode: "0644"
+    contents:
+      text: "test"
+  - path: "/var/tmp/dir"
+    type: "dir"
+    mode: "0755"
+    user: "lzap"
+    group: "lzap"
+    ensure_parents: true
+  - path: "/var/tmp/dir"
+    mode: "0755"
+    type: "dir"
+    #state: "absent" # unsupported by TOML
+ignition:
+  url: "https://ignition.example.com/firstboot"
+  #text: ""
+installer:
+  anaconda:
+    unattended: true
+    sudo_nopasswd: ["lzap"]
+    enabled_modules: ["org.fedoraproject.Anaconda.Modules.Subscription"]
+    disabled_modules: ["org.fedoraproject.Anaconda.Modules.Timezone"]
+    kickstart: "# some kickstart data"
+  coreos:
+    installation_device: "/dev/vda"
+cacerts:
+  - pem: "pem encoded cert"
+openscap:
+  profile_id: "xccdf_org.ssgproject.content_profile_cis"
+  datastream: "/usr/share/xml/scap/ssg/content/ssg-rhel8-ds.xml"
+  tailoring:
+    selected: ["xccdf_org.ssgproject.content_rule_md5_check"]
+    unselected: ["xccdf_org.ssgproject.content_rule_grub2_password"]
+    #json_profile_id: "name-of-profile-used-in-json-tailoring-file"
+    #json_filepath: "file:///some/path/tailoring-file.json"
+storage:
+  type: "gpt"
+  minsize: "150 GiB"
+  partitions:
+    - type: "plain"
+      label: "label"
+      mountpoint: "/"
+      fs_type: "ext4"
+      minsize: "50 GiB"
+    - type: "lvm"
+      name: "vg_name"
+      minsize: "50 GiB"
+      logical_volumes:
+        - label: "label"
+          mountpoint: "/var"
+          fs_type: "ext4"
+          name: "lv_name"
+          minsize: "50 GiB"
+    - type: "btrfs"
+      minsize: "50 GiB"
+      subvolumes:
+        - name: "name"
+          mountpoint: "/opt/name"</textarea>
         </div>
 
         <div class="section">
