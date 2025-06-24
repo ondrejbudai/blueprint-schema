@@ -2,7 +2,7 @@ name: Deploy WASM Blueprint Converter
 
 on:
   push:
-    branches: [ main ]
+    branches: [ wasm ]
     paths:
       - 'cmd/wasm-blueprint/**'
       - 'pkg/**'
